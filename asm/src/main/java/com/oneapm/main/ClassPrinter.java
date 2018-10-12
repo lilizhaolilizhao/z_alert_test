@@ -2,9 +2,11 @@ package com.oneapm.main;
 
 import org.objectweb.asm.*;
 
+import static org.objectweb.asm.Opcodes.ASM4;
+
 public class ClassPrinter extends ClassVisitor {
     public ClassPrinter(int api) {
-        super(api);
+        super(ASM4);
     }
 
     public ClassPrinter(int api, ClassVisitor cv) {
