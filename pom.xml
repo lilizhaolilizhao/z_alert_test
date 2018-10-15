@@ -7,16 +7,12 @@
     <modules>
         <module>asm</module>
         <module>akka</module>
-        <module>akka</module>
     </modules>
 
-    <parent>
-        <artifactId>alert-service</artifactId>
-        <groupId>com.oneapm.research</groupId>
-        <version>4.2.0.8-SNAPSHOT</version>
-    </parent>
-
     <artifactId>akka-kafka</artifactId>
+    <groupId>com.oneapm.research</groupId>
+    <version>5.5.1</version>
+
     <build>
         <plugins>
             <plugin>
@@ -33,6 +29,7 @@
     <properties>
         <!-- DB library -->
         <mysql-connector-java.version>6.0.6</mysql-connector-java.version>
+        <asm-version>5.0.3</asm-version>
     </properties>
 
     <dependencyManagement>
@@ -41,22 +38,22 @@
             <dependency>
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
-                <version>6.0</version>
+                <version>${asm-version}</version>
             </dependency>
             <dependency>
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm-commons</artifactId>
-                <version>6.0</version>
+                <version>${asm-version}</version>
             </dependency>
             <dependency>
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm-tree</artifactId>
-                <version>6.0</version>
+                <version>${asm-version}</version>
             </dependency>
             <dependency>
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm-util</artifactId>
-                <version>6.0</version>
+                <version>${asm-version}</version>
             </dependency>
             <!-- asm end -->
             <dependency>

@@ -3,7 +3,9 @@ package com.oneapm.main;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.util.TraceClassVisitor;
 
+import java.io.PrintWriter;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
@@ -56,11 +58,20 @@ public class Main {
 //            cr.accept(cv, 0);
 //            byte[] b2 = cw.toByteArray(); // b2 与 b1 表示同一个类
 
+//            byte[] b1 = new String().getBytes();
+//            ClassReader cr = new ClassReader(b1);
+//            ClassWriter cw = new ClassWriter(cr, 0);
+//            ChangeVersionAdapter ca = new ChangeVersionAdapter(cw);
+//            cr.accept(ca, 0);
+
+            PrintWriter printWriter = new PrintWriter(System.out);
+
             byte[] b1 = new String().getBytes();
             ClassReader cr = new ClassReader(b1);
             ClassWriter cw = new ClassWriter(cr, 0);
-            ChangeVersionAdapter ca = new ChangeVersionAdapter(cw);
-            cr.accept(ca, 0);
+//            ChangeVersionAdapter ca = new ChangeVersionAdapter(cw);
+            TraceClassVisitor cv = new TraceClassVisitor(cw, printWriter);
+            cr.accept(cv, 0);
         } catch (Exception e) {
             e.printStackTrace();
         }

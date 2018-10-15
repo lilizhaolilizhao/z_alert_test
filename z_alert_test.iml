@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$/../z_akka-kafka/akka22222/src/main/java">
+      <sourceFolder url="file://$MODULE_DIR$/../z_akka-kafka/akka22222/src/main/java" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../z_akka-kafka/akka22222/src/main/resources">
+      <sourceFolder url="file://$MODULE_DIR$/../z_akka-kafka/akka22222/src/main/resources" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../z_akka-kafka/akka22222/src/main/scala">
+      <sourceFolder url="file://$MODULE_DIR$/../z_akka-kafka/akka22222/src/main/scala" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../z_akka-kafka/src/test/java">
+      <sourceFolder url="file://$MODULE_DIR$/../z_akka-kafka/src/test/java" isTestSource="true" />
+    </content>
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/../z_akka-kafka/akka22222/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../z_akka-kafka/akka22222/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../z_akka-kafka/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../z_akka-kafka/akka22222/src/main/scala" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../z_akka-kafka/akka22222/src/main/scala" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/../z_akka-kafka/target" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="scala-sdk-2.11.8" level="application" />
+  </component>
+</module>
