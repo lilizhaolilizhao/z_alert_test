@@ -1,4 +1,5 @@
-com\agent\PerfMonAgent.class
-com\agent\ConfigConst.class
-com\agent\PerfMonXformer.class
-com\agent\PerfMonXformer$1.class
+com\oneapm\agent\PerfMonAgent.class
+loaded\LoadedAgent.class
+com\oneapm\agent\PerfMonXformer$1.class
+com\oneapm\agent\ConfigConst.class
+com\oneapm\agent\PerfMonXformer.class

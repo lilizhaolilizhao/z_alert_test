@@ -1,3 +1,0 @@
-manifest-Version: 1.0
-Premain-Class: com.agent.PerfMonAgent
-Can-Redefine-Classes: true

@@ -1,4 +1,4 @@
-package com.agent;
+package com.oneapm.agent;
 
 import javassist.*;
 import javassist.expr.ExprEditor;
