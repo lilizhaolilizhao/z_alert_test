@@ -47,17 +47,27 @@ public class PerfMonXformer implements ClassFileTransformer {
 
     private void doMethod(CtBehavior method) throws NotFoundException,
             CannotCompileException {
-        method.insertBefore("long stime = System.nanoTime();");
-        method.insertAfter("System.out.println(\"leave " + method.getName() + " and time:\"+(System.nanoTime()-stime));");
-        method.instrument(new ExprEditor() {
-            public void edit(MethodCall m) throws CannotCompileException {
-//                m.replace("{ long stime = System.nanoTime(); $_ = $proceed($$); System.out.println(\""
-//                        + m.getClassName()
-//                        + "."
-//                        + m.getMethodName()
-//                        + ":\"+(System.nanoTime()-stime));}");
-
-            }
-        });
+        try {
+            method.addLocalVariable("startTime", CtClass.longType);
+            method.insertBefore("System.out.println(startTime);");
+            method.insertBefore("startTime = System.currentTimeMillis();");
+//			method.insertBefore("long startTime = System.currentTimeMillis();System.out.println(startTime);");
+            method.insertBefore("System.out.println(\"insert before ......\");");
+            method.insertAfter("System.out.println(\"leave " + method.getName() + " and time is :\" + (System.currentTimeMillis() - startTime));");
+//            method.insertBefore("long stime = System.nanoTime();");
+//            method.insertAfter("System.out.println(\"leave " + method.getName() + " and time:\"+(System.nanoTime()-stime));");
+//            method.instrument(new ExprEditor() {
+//                public void edit(MethodCall m) throws CannotCompileException {
+//                    m.replace("{ long stime = System.nanoTime(); $_ = $proceed($$); System.out.println(\""
+//                            + m.getClassName()
+//                            + "."
+//                            + m.getMethodName()
+//                            + ":\"+(System.nanoTime()-stime));===================================================}");
+//
+//                }
+//            });
+        } catch (CannotCompileException e) {
+            e.printStackTrace();
+        }
     }
 }

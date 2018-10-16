@@ -1,4 +1,5 @@
 package com.oneapm.agent;
+import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.Instrumentation;
 public class LoadedAgent {
 
@@ -18,11 +19,10 @@ public class LoadedAgent {
 //        if (ConfigConst.INVALID_LOG == Boolean.TRUE)
 //            System.out.println("PerfMonAgent main was called.");
 //        // Initialize the static variables we use to track information.
-//        inst = _inst;
 //        // Set up the class-file transformer.
 //        ClassFileTransformer trans = new PerfMonXformer();
 //        if (ConfigConst.INVALID_LOG == Boolean.TRUE)
 //            System.out.println("Adding a PerfMonXformer instance to the JVM.");
-//        inst.addTransformer(trans);
+//        _inst.addTransformer(trans);
     }
 }
