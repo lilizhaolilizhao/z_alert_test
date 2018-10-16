@@ -7,8 +7,16 @@ import com.sun.tools.attach.VirtualMachine;
 
 import java.io.IOException;
 
-//args[0]传入的是jvm的pid号
 public class AttachTest {
+
+    /**
+     * 传入的是jvm的pid号
+     * @param args
+     * @throws AttachNotSupportedException
+     * @throws IOException
+     * @throws AgentLoadException
+     * @throws AgentInitializationException
+     */
     public static void main(String[] args) throws AttachNotSupportedException,
             IOException, AgentLoadException, AgentInitializationException {
         VirtualMachine vm = VirtualMachine.attach(args[0]);

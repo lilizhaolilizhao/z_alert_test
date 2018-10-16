@@ -12,17 +12,18 @@ public class LoadedAgent {
     }
 
     private static void main(String args, Instrumentation _inst) {
-        Class[] classes = _inst.getAllLoadedClasses();
-        for(Class cls :classes){
-            System.out.println(cls.getName());
-        }
-//        if (ConfigConst.INVALID_LOG == Boolean.TRUE)
-//            System.out.println("PerfMonAgent main was called.");
-//        // Initialize the static variables we use to track information.
-//        // Set up the class-file transformer.
-//        ClassFileTransformer trans = new PerfMonXformer();
-//        if (ConfigConst.INVALID_LOG == Boolean.TRUE)
-//            System.out.println("Adding a PerfMonXformer instance to the JVM.");
-//        _inst.addTransformer(trans);
+//        Class[] classes = _inst.getAllLoadedClasses();
+//        for(Class cls :classes){
+//            System.out.println(cls.getName());
+//        }
+
+        if (ConfigConst.INVALID_LOG == Boolean.TRUE)
+            System.out.println("PerfMonAgent main was called.");
+        // Initialize the static variables we use to track information.
+        // Set up the class-file transformer.
+        ClassFileTransformer trans = new PerfMonXformer();
+        if (ConfigConst.INVALID_LOG == Boolean.TRUE)
+            System.out.println("Adding a PerfMonXformer instance to the JVM.");
+        _inst.addTransformer(trans);
     }
 }
