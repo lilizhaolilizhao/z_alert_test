@@ -1,8 +1,6 @@
 package com.oneapm.agent;
 
 import javassist.*;
-import javassist.expr.ExprEditor;
-import javassist.expr.MethodCall;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
@@ -47,13 +45,13 @@ public class PerfMonXformer implements ClassFileTransformer {
 
     private void doMethod(CtBehavior method) throws NotFoundException,
             CannotCompileException {
-        try {
-            method.addLocalVariable("startTime", CtClass.longType);
-            method.insertBefore("System.out.println(startTime);");
-            method.insertBefore("startTime = System.currentTimeMillis();");
+
+        method.addLocalVariable("startTime", CtClass.longType);
+        method.insertBefore("System.out.println(startTime);");
+        method.insertBefore("startTime = System.currentTimeMillis();");
 //			method.insertBefore("long startTime = System.currentTimeMillis();System.out.println(startTime);");
-            method.insertBefore("System.out.println(\"insert before ......\");");
-            method.insertAfter("System.out.println(\"leave " + method.getName() + " and time is :\" + (System.currentTimeMillis() - startTime));");
+        method.insertBefore("System.out.println(\"insert before ......\");");
+        method.insertAfter("System.out.println(\"leave " + method.getName() + " and time is :\" + (System.currentTimeMillis() - startTime));");
 //            method.insertBefore("long stime = System.nanoTime();");
 //            method.insertAfter("System.out.println(\"leave " + method.getName() + " and time:\"+(System.nanoTime()-stime));");
 //            method.instrument(new ExprEditor() {
@@ -66,8 +64,5 @@ public class PerfMonXformer implements ClassFileTransformer {
 //
 //                }
 //            });
-        } catch (CannotCompileException e) {
-            e.printStackTrace();
-        }
     }
 }
