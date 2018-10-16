@@ -14,8 +14,16 @@ public class PerfMonAgent {
      * when this agent is specified to the Java VM.
      **/
     public static void premain(String agentArgs, Instrumentation _inst) {
+        main(agentArgs, _inst);
+    }
+
+    public static void agentmain(String args, Instrumentation _inst) {
+        main(args, inst);
+    }
+
+    private static void main(String args, Instrumentation _inst) {
         if (ConfigConst.INVALID_LOG == Boolean.TRUE)
-            System.out.println("PerfMonAgent.premain() was called.");
+            System.out.println("PerfMonAgent Ì½Õëº¯Êý was called.");
         // Initialize the static variables we use to track information.
         inst = _inst;
         // Set up the class-file transformer.
@@ -24,4 +32,5 @@ public class PerfMonAgent {
             System.out.println("Adding a PerfMonXformer instance to the JVM.");
         inst.addTransformer(trans);
     }
+
 }

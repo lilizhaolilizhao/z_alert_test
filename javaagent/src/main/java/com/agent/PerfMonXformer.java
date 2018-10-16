@@ -9,7 +9,7 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 /**
- * Created by chaoli.lcl on 2015/5/11.
+ * 监控类
  */
 public class PerfMonXformer implements ClassFileTransformer {
 
@@ -28,7 +28,7 @@ public class PerfMonXformer implements ClassFileTransformer {
             if (cl.isInterface() == false) {
                 CtBehavior[] methods = cl.getDeclaredBehaviors();
                 for (int i = 0; i < methods.length; i++) {
-                    if (methods[i].isEmpty() == false) {
+                    if (!methods[i].isEmpty()) {
                         doMethod(methods[i]);
                     }
                 }
