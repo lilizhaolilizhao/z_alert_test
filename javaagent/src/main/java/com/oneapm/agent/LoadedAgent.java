@@ -1,22 +1,12 @@
 package com.oneapm.agent;
-
-import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.Instrumentation;
+public class LoadedAgent {
 
-/**
- * Created by chaoli.lcl on 2015/5/11.
- */
-public class PerfMonAgent {
-
-    /**
-     * This method is called before the application s main-method is called,
-     * when this agent is specified to the Java VM.
-     **/
     public static void premain(String agentArgs, Instrumentation _inst) {
         main(agentArgs, _inst);
     }
 
-    public static void agentmain(String args, Instrumentation _inst) {
+    public static void agentmain(String args, Instrumentation _inst){
         main(args, _inst);
     }
 
@@ -35,5 +25,4 @@ public class PerfMonAgent {
 //            System.out.println("Adding a PerfMonXformer instance to the JVM.");
 //        inst.addTransformer(trans);
     }
-
 }

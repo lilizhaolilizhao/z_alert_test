@@ -50,6 +50,7 @@
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
                     <showDeprecation>true</showDeprecation>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
             <plugin>
@@ -67,9 +68,9 @@
                             </descriptorRefs>
                             <archive>
                                 <manifestEntries>
-                                    <Premain-Class>loaded.LoadedAgent</Premain-Class>
+                                    <Premain-Class>com.oneapm.agent.LoadedAgent</Premain-Class>
                                     <!--<Premain-Class>com.oneapm.agent.PerfMonAgent</Premain-Class>-->
-                                    <Agent-Class>loaded.LoadedAgent</Agent-Class>
+                                    <Agent-Class>com.oneapm.agent.LoadedAgent</Agent-Class>
                                     <!--<Agent-Class>com.oneapm.agent.PerfMonAgent</Agent-Class>-->
                                     <Can-Redefine-Classes>true</Can-Redefine-Classes>
                                     <Can-Retransform-Classes>true</Can-Retransform-Classes>
