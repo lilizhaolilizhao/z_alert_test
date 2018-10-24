@@ -10,7 +10,7 @@
         <module>javaagent</module>
     </modules>
 
-    <artifactId>akka-kafka</artifactId>
+    <artifactId>alert_test</artifactId>
     <groupId>com.oneapm.research</groupId>
     <version>5.5.1</version>
 
