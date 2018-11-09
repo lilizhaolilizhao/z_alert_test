@@ -18,8 +18,8 @@ object KafkaMain {
 
   def main(args: Array[String]): Unit = {
     val aiRawEvent =
-//      """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1536284645342_node_1_1_0_1_1","metrics":{"VM":"2328808"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
-      """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1536284645342_node_1_1_0_1_1","metrics":{"VMUsage":"2328808"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+      """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1536562263393_node_1_1_0_1_2","metrics":{"VM":"2328808"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+//      """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1536562263393_node_1_1_0_1_2","metrics":{"VMUsage":"2328808"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
     //      """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1535699921714_node_1_1","metrics":{"VMUsage":"0.02328808"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
 
     val event = JSON.parseObject(aiRawEvent)
