@@ -30,7 +30,8 @@
     <properties>
         <!-- DB library -->
         <mysql-connector-java.version>6.0.6</mysql-connector-java.version>
-        <asm-version>5.0.3</asm-version>
+        <!--<asm-version>5.0.3</asm-version>-->
+        <asm-version>LATEST</asm-version>
     </properties>
 
     <dependencyManagement>
