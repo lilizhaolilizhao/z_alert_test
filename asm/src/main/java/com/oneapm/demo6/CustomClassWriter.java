@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class CustomClassWriter {
     AddFieldAdapter addFieldAdapter;
+    PublicizeMethodAdapter pubMethAdapter;
 
     Integer test = new Integer(1);
     static String className = "java.lang.Integer";
@@ -27,6 +28,12 @@ public class CustomClassWriter {
                 org.objectweb.asm.Opcodes.ACC_PUBLIC, "Z",
                 writer);
         reader.accept(addFieldAdapter, 0);
+        return writer.toByteArray();
+    }
+
+    public byte[] publicizeMethod() {
+        pubMethAdapter = new PublicizeMethodAdapter(writer);
+        reader.accept(pubMethAdapter, 0);
         return writer.toByteArray();
     }
 
