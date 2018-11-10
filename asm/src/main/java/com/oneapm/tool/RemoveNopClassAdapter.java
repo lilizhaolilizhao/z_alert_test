@@ -1,7 +1,6 @@
 package com.oneapm.tool;
 
 import jdk.internal.org.objectweb.asm.ClassVisitor;
-import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import static org.objectweb.asm.Opcodes.ASM4;
 

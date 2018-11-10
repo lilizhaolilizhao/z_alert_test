@@ -9,6 +9,7 @@ public class AddSecurityCheckClassAdapter extends ClassAdapter {
     public AddSecurityCheckClassAdapter(ClassVisitor cv) {
         super(cv);
     }
+
     private String enhancedSuperName;
 
     @Override
@@ -24,7 +25,7 @@ public class AddSecurityCheckClassAdapter extends ClassAdapter {
         MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions);
         MethodVisitor wrappedMv = mv;
 
-        if(mv != null) {
+        if (mv != null) {
             if (name.equals("operation")) {
                 wrappedMv = new AddSecurityCheckMethodAdapter(mv);
             } else if (name.equals("<init>")) {
