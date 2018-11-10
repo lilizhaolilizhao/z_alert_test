@@ -16,9 +16,7 @@ public class Generator {
         cr.accept(classAdapter, ClassReader.SKIP_DEBUG);
         byte[] data = cw.toByteArray();
 
-        File file = new File("Account.class");
-
-        System.out.println(file.getAbsolutePath());
+        File file = new File("/Users/oneapm/git/z_alert_test/asm/target/classes/com/oneapm/demo/Account.class");
         FileOutputStream fout = new FileOutputStream(file);
         fout.write(data);
         fout.close();
