@@ -1,8 +1,8 @@
 package com.oneapm.demo2;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.ClassAdapter;
-import com.sun.xml.internal.ws.org.objectweb.asm.ClassReader;
-import com.sun.xml.internal.ws.org.objectweb.asm.ClassWriter;
+//import org.objectweb.asm.ClassAdapter;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassWriter;
 
 import java.io.IOException;
 
@@ -15,8 +15,8 @@ public class SecureAccountGenerator {
         if (null == secureAccountClass) {
             ClassReader cr = new ClassReader("com.oneapm.demo2.Account");
             ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-            ClassAdapter classAdapter = new AddSecurityCheckClassAdapter(cw);
-            cr.accept(classAdapter, ClassReader.SKIP_DEBUG);
+//            ClassAdapter classAdapter = new AddSecurityCheckClassAdapter(cw);
+//            cr.accept(classAdapter, ClassReader.SKIP_DEBUG);
             byte[] data = cw.toByteArray();
             secureAccountClass = classLoader.defineClassFromClassFile(
                     "Account$EnhancedByASM", data);
