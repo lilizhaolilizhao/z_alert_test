@@ -1,14 +1,19 @@
 package com.oneapm.guice.getstart;
 
-public interface BillingService {
+import com.google.inject.Inject;
 
-  /**
-   * Attempts to charge the order to the credit card. Both successful and
-   * failed transactions will be recorded.
-   *
-   * @return a receipt of the transaction. If the charge was successful, the
-   *      receipt will be successful. Otherwise, the receipt will contain a
-   *      decline note describing why the charge failed.
-   */
-  void chargeOrder();
+public class BillingService {
+
+    private final CreditCardProcessor processor;
+    private final TransactionLog transactionLog;
+
+    @Inject
+    public BillingService(CreditCardProcessor processor, TransactionLog transactionLog) {
+        this.processor = processor;
+        this.transactionLog = transactionLog;
+    }
+
+    void chargeOrder() {
+        System.out.println("this is a test!");
+    }
 }
