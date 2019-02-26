@@ -11,6 +11,7 @@
         <module>clickhouse</module>
         <module>kafka</module>
         <module>guice</module>
+        <module>java_test</module>
     </modules>
 
     <artifactId>alert_test</artifactId>
