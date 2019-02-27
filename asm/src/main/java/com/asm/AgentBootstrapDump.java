@@ -93,6 +93,21 @@ public class AgentBootstrapDump implements Opcodes {
             mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
             mv.visitCode();
             mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(1, 1);
+            mv.visitEnd();
+        }
+
+        {
+            mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "premain", "(Ljava/lang/String;Ljava/lang/instrument/Instrumentation;)V", null, null);
+            mv.visitCode();
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitMethodInsn(INVOKESTATIC, "com/taobao/arthas/agent/AgentBootstrap", "main",
+                    "(Ljava/lang/String;Ljava/lang/instrument/Instrumentation;)V", false);
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(2, 2);
             mv.visitEnd();
         }
 
