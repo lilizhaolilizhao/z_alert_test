@@ -104,10 +104,31 @@ public class AgentBootstrapDump implements Opcodes {
             mv.visitCode();
             mv.visitVarInsn(ALOAD, 0);
             mv.visitVarInsn(ALOAD, 1);
-            mv.visitMethodInsn(INVOKESTATIC, "com/taobao/arthas/agent/AgentBootstrap", "main",
-                    "(Ljava/lang/String;Ljava/lang/instrument/Instrumentation;)V", false);
+            mv.visitMethodInsn(INVOKESTATIC, "com/taobao/arthas/agent/AgentBootstrap", "main", "(Ljava/lang/String;Ljava/lang/instrument/Instrumentation;)V", false);
             mv.visitInsn(RETURN);
             mv.visitMaxs(2, 2);
+            mv.visitEnd();
+        }
+
+        {
+            mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "agentmain", "(Ljava/lang/String;Ljava/lang/instrument/Instrumentation;)V", null, null);
+            mv.visitCode();
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitMethodInsn(INVOKESTATIC, "com/taobao/arthas/agent/AgentBootstrap", "main", "(Ljava/lang/String;Ljava/lang/instrument/Instrumentation;)V", false);
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(2, 2);
+            mv.visitEnd();
+        }
+
+        {
+            mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC + ACC_SYNCHRONIZED, "resetArthasClassLoader", "()V", null, null);
+            mv.visitCode();
+            mv.visitInsn(ACONST_NULL);
+            mv.visitFieldInsn(PUTSTATIC, "com/taobao/arthas/agent/AgentBootstrap", "arthasClassLoader",
+                    "Ljava/lang/ClassLoader;");
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(1, 0);
             mv.visitEnd();
         }
 
