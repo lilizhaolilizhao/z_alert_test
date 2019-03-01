@@ -149,6 +149,32 @@ public class AgentBootstrapDump implements Opcodes {
             mv.visitEnd();
         }
 
+        {
+            mv = cw.visitMethod(ACC_PRIVATE + ACC_STATIC, "loadOrDefineClassLoader", "(Ljava/io/File;)Ljava/lang/ClassLoader;", null, new String[]{"java/lang/Throwable"});
+            mv.visitCode();
+            mv.visitFieldInsn(GETSTATIC, "com/taobao/arthas/agent/AgentBootstrap", "arthasClassLoader", "Ljava/lang/ClassLoader;");
+            Label l0 = new Label();
+            mv.visitJumpInsn(IFNONNULL, l0);
+            mv.visitTypeInsn(NEW, "com/taobao/arthas/agent/ArthasClassloader");
+            mv.visitInsn(DUP);
+            mv.visitInsn(ICONST_1);
+            mv.visitTypeInsn(ANEWARRAY, "java/net/URL");
+            mv.visitInsn(DUP);
+            mv.visitInsn(ICONST_0);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/File", "toURI", "()Ljava/net/URI;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/net/URI", "toURL", "()Ljava/net/URL;", false);
+            mv.visitInsn(AASTORE);
+            mv.visitMethodInsn(INVOKESPECIAL, "com/taobao/arthas/agent/ArthasClassloader", "<init>", "([Ljava/net/URL;)V", false);
+            mv.visitFieldInsn(PUTSTATIC, "com/taobao/arthas/agent/AgentBootstrap", "arthasClassLoader", "Ljava/lang/ClassLoader;");
+            mv.visitLabel(l0);
+            mv.visitFrame(F_SAME, 0, null, 0, null);
+            mv.visitFieldInsn(GETSTATIC, "com/taobao/arthas/agent/AgentBootstrap", "arthasClassLoader", "Ljava/lang/ClassLoader;");
+            mv.visitInsn(ARETURN);
+            mv.visitMaxs(6, 1);
+            mv.visitEnd();
+        }
+
         return cw.toByteArray();
     }
 
