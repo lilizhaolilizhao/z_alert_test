@@ -322,6 +322,67 @@ public class AgentBootstrapDump implements Opcodes {
             mv.visitEnd();
         }
 
+        {
+            mv = cw.visitMethod(ACC_PRIVATE + ACC_STATIC + ACC_SYNCHRONIZED, "main", "(Ljava/lang/String;Ljava/lang/instrument/Instrumentation;)V", null, null);
+            mv.visitCode();
+            Label l0 = new Label();
+            Label l1 = new Label();
+            Label l2 = new Label();
+            mv.visitTryCatchBlock(l0, l1, l2, "java/lang/Throwable");
+            Label l3 = new Label();
+            Label l4 = new Label();
+            mv.visitTryCatchBlock(l3, l4, l2, "java/lang/Throwable");
+            Label l5 = new Label();
+            Label l6 = new Label();
+            mv.visitTryCatchBlock(l5, l6, l2, "java/lang/Throwable");
+            Label l7 = new Label();
+            Label l8 = new Label();
+            Label l9 = new Label();
+            mv.visitTryCatchBlock(l7, l8, l9, "java/lang/Throwable");
+            mv.visitLabel(l0);
+            mv.visitFieldInsn(GETSTATIC, "com/taobao/arthas/agent/AgentBootstrap", "ps", "Ljava/io/PrintStream;");
+            mv.visitLdcInsn("Arthas server agent start...");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitIntInsn(BIPUSH, 59);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/String", "indexOf", "(I)I", false);
+            mv.visitVarInsn(ISTORE, 2);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitInsn(ICONST_0);
+            mv.visitVarInsn(ILOAD, 2);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/String", "substring", "(II)Ljava/lang/String;", false);
+            mv.visitVarInsn(ASTORE, 3);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitVarInsn(ILOAD, 2);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/String", "length", "()I", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/String", "substring", "(II)Ljava/lang/String;", false);
+            mv.visitVarInsn(ASTORE, 4);
+            mv.visitTypeInsn(NEW, "java/io/File");
+            mv.visitInsn(DUP);
+            mv.visitVarInsn(ALOAD, 3);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/io/File", "<init>", "(Ljava/lang/String;)V", false);
+            mv.visitVarInsn(ASTORE, 5);
+            mv.visitVarInsn(ALOAD, 5);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/File", "exists", "()Z", false);
+            mv.visitJumpInsn(IFNE, l3);
+            mv.visitFieldInsn(GETSTATIC, "com/taobao/arthas/agent/AgentBootstrap", "ps", "Ljava/io/PrintStream;");
+            mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
+            mv.visitInsn(DUP);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V", false);
+            mv.visitLdcInsn("Agent jar file does not exist: ");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+            mv.visitVarInsn(ALOAD, 5);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+            mv.visitLabel(l1);
+            mv.visitInsn(RETURN);
+            mv.visitLabel(l3);
+
+
+        }
+
         return cw.toByteArray();
     }
 
