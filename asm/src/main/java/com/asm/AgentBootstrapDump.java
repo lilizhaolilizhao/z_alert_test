@@ -592,6 +592,97 @@ public class AgentBootstrapDump implements Opcodes {
             mv.visitEnd();
         }
 
+        {
+            mv = cw.visitMethod(ACC_STATIC + ACC_SYNTHETIC, "access$000", "(Ljava/lang/instrument/Instrumentation;Ljava/lang/ClassLoader;Ljava/lang/String;)V", null, new String[]{"java/lang/Throwable"});
+            mv.visitCode();
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitVarInsn(ALOAD, 2);
+            mv.visitMethodInsn(INVOKESTATIC, "com/taobao/arthas/agent/AgentBootstrap", "bind", "(Ljava/lang/instrument/Instrumentation;Ljava/lang/ClassLoader;Ljava/lang/String;)V", false);
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(3, 3);
+            mv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod(ACC_STATIC + ACC_SYNTHETIC, "access$100", "()Ljava/io/PrintStream;", null, null);
+            mv.visitCode();
+            mv.visitFieldInsn(GETSTATIC, "com/taobao/arthas/agent/AgentBootstrap", "ps", "Ljava/io/PrintStream;");
+            mv.visitInsn(ARETURN);
+            mv.visitMaxs(1, 0);
+            mv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
+            mv.visitCode();
+            Label l0 = new Label();
+            Label l1 = new Label();
+            Label l2 = new Label();
+            mv.visitTryCatchBlock(l0, l1, l2, "java/lang/Throwable");
+            mv.visitFieldInsn(GETSTATIC, "java/lang/System", "err", "Ljava/io/PrintStream;");
+            mv.visitFieldInsn(PUTSTATIC, "com/taobao/arthas/agent/AgentBootstrap", "ps", "Ljava/io/PrintStream;");
+            mv.visitLabel(l0);
+            mv.visitTypeInsn(NEW, "java/io/File");
+            mv.visitInsn(DUP);
+            mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
+            mv.visitInsn(DUP);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V", false);
+            mv.visitLdcInsn("user.home");
+            mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "getProperty", "(Ljava/lang/String;)Ljava/lang/String;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+            mv.visitFieldInsn(GETSTATIC, "java/io/File", "separator", "Ljava/lang/String;");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+            mv.visitLdcInsn("logs");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+            mv.visitFieldInsn(GETSTATIC, "java/io/File", "separator", "Ljava/lang/String;");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+            mv.visitLdcInsn("arthas");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+            mv.visitFieldInsn(GETSTATIC, "java/io/File", "separator", "Ljava/lang/String;");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+            mv.visitLdcInsn("arthas.log");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;", false);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/io/File", "<init>", "(Ljava/lang/String;)V", false);
+            mv.visitVarInsn(ASTORE, 0);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/File", "exists", "()Z", false);
+            Label l3 = new Label();
+            mv.visitJumpInsn(IFNE, l3);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/File", "getParentFile", "()Ljava/io/File;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/File", "mkdirs", "()Z", false);
+            mv.visitInsn(POP);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/File", "createNewFile", "()Z", false);
+            mv.visitInsn(POP);
+            mv.visitLabel(l3);
+            mv.visitFrame(Opcodes.F_APPEND, 1, new Object[]{"java/io/File"}, 0, null);
+            mv.visitTypeInsn(NEW, "java/io/PrintStream");
+            mv.visitInsn(DUP);
+            mv.visitTypeInsn(NEW, "java/io/FileOutputStream");
+            mv.visitInsn(DUP);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitInsn(ICONST_1);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/io/FileOutputStream", "<init>", "(Ljava/io/File;Z)V", false);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/io/PrintStream", "<init>", "(Ljava/io/OutputStream;)V", false);
+            mv.visitFieldInsn(PUTSTATIC, "com/taobao/arthas/agent/AgentBootstrap", "ps", "Ljava/io/PrintStream;");
+            mv.visitLabel(l1);
+            Label l4 = new Label();
+            mv.visitJumpInsn(GOTO, l4);
+            mv.visitLabel(l2);
+            mv.visitFrame(Opcodes.F_FULL, 0, new Object[]{}, 1, new Object[]{"java/lang/Throwable"});
+            mv.visitVarInsn(ASTORE, 0);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitFieldInsn(GETSTATIC, "com/taobao/arthas/agent/AgentBootstrap", "ps", "Ljava/io/PrintStream;");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Throwable", "printStackTrace", "(Ljava/io/PrintStream;)V", false);
+            mv.visitLabel(l4);
+            mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(6, 1);
+            mv.visitEnd();
+        }
+        cw.visitEnd();
+
         return cw.toByteArray();
     }
 
