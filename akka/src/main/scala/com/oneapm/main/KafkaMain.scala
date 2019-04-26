@@ -14,14 +14,14 @@ import com.oneapm.kafka.KafkaPacketProducer
 //}
 
 object KafkaMain {
-  private val producer = new KafkaPacketProducer("as_jl_ct_event", "10.128.5.51:9092", synchronously = true, requestRequiredAcks = 1)
+  private val producer = new KafkaPacketProducer("as_jl_ct_event", "10.128.106.16:9092", synchronously = true, requestRequiredAcks = 1)
 
   def main(args: Array[String]): Unit = {
     val aiRawEvent =
-      """{"key":"c7d3156a-6d9d-42ba-9fb7-97b28079ad44","eventCategory":"RawMetricEvent","metrics":{"TerminalIPUnmatch":"0","TotalTimes":"1","AvailableTimes":"1","ResponseTime":"303004.0"},"tags":null,"ttl":86400,"timestamp":1542771928272}"""
+//      """{"key":"c7d3156a-6d9d-42ba-9fb7-97b28079ad44","eventCategory":"RawMetricEvent","metrics":{"TerminalIPUnmatch":"0","TotalTimes":"1","AvailableTimes":"1","ResponseTime":"303004.0"},"tags":null,"ttl":86400,"timestamp":1542771928272}"""
 //      """{"eventCategory":"RawMetricEvent","key":"b22dd8c2-c43c-44e7-975c-561e71315b3a","metrics":{"ResponseTime":"300220.0"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
 //      """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1536562263393_node_1_1_0_1_2","metrics":{"VMUsage":"2328808"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
-    //      """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1535699921714_node_1_1","metrics":{"VMUsage":"0.02328808"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+          """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1556179552378_webTransaction_2_2_912_3_0","metrics":{"VMUsage":"0.02328808"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
 
     val event = JSON.parseObject(aiRawEvent)
     try {
