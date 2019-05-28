@@ -11,6 +11,92 @@ object KafkaMain {
 
   def main(args: Array[String]): Unit = {
 //    testCutoffEvent
+    testFrequencyEvents
+  }
+
+  /**
+    * 测试频次事件
+    */
+  def testFrequencyEvents = {
+    try {
+      ////////////////////////////////////////////100////////////////////////////////////////////////////
+      var aiRawEvent =
+        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"10"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+      var event = JSON.parseObject(aiRawEvent)
+      event.put("timestamp", System.currentTimeMillis - 6 * 60 * 1000)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+
+      ////////////////////////////////////////////200////////////////////////////////////////////////////
+      aiRawEvent =
+        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"100"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+      event = JSON.parseObject(aiRawEvent)
+
+      event.put("timestamp", System.currentTimeMillis - 5 * 60 * 1000)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+
+      ////////////////////////////////////////////300////////////////////////////////////////////////////
+      aiRawEvent =
+        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"20"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+      event = JSON.parseObject(aiRawEvent)
+
+      event.put("timestamp", System.currentTimeMillis - 4 * 60 * 1000)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+
+      ////////////////////////////////////////////400////////////////////////////////////////////////////
+      aiRawEvent =
+        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"190"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+      event = JSON.parseObject(aiRawEvent)
+
+      event.put("timestamp", System.currentTimeMillis - 3 * 60 * 1000)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+
+      ////////////////////////////////////////////500////////////////////////////////////////////////////
+      aiRawEvent =
+        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"30"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+      event = JSON.parseObject(aiRawEvent)
+
+      event.put("timestamp", System.currentTimeMillis - 2 * 60 * 1000)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+
+      ////////////////////////////////////////////600////////////////////////////////////////////////////
+      aiRawEvent =
+        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"180"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+      event = JSON.parseObject(aiRawEvent)
+
+      event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+
+      ////////////////////////////////////////////700////////////////////////////////////////////////////
+      aiRawEvent =
+        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"50"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+      event = JSON.parseObject(aiRawEvent)
+
+      event.put("timestamp", System.currentTimeMillis)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+    } catch {
+      case e: Exception => e.printStackTrace
+    }
   }
 
   /**
