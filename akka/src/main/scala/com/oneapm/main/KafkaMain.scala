@@ -10,6 +10,7 @@ object KafkaMain {
   private val producer =  new KafkaPacketProducer("as_jl_ai_event", "kafka.oneapm.me:9092", synchronously = true, requestRequiredAcks = 1)
 
   def main(args: Array[String]): Unit = {
+//    testContinueEvent
 //    testCutoffEvent
     testFrequencyEvents
   }
@@ -21,7 +22,7 @@ object KafkaMain {
     try {
       ////////////////////////////////////////////100////////////////////////////////////////////////////
       var aiRawEvent =
-        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"10"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"100"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
 
       var event = JSON.parseObject(aiRawEvent)
       event.put("timestamp", System.currentTimeMillis - 6 * 60 * 1000)
@@ -42,7 +43,7 @@ object KafkaMain {
 
       ////////////////////////////////////////////300////////////////////////////////////////////////////
       aiRawEvent =
-        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"20"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"100"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
 
       event = JSON.parseObject(aiRawEvent)
 
@@ -64,7 +65,7 @@ object KafkaMain {
 
       ////////////////////////////////////////////500////////////////////////////////////////////////////
       aiRawEvent =
-        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"30"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"100"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
 
       event = JSON.parseObject(aiRawEvent)
 
@@ -86,7 +87,7 @@ object KafkaMain {
 
       ////////////////////////////////////////////700////////////////////////////////////////////////////
       aiRawEvent =
-        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"50"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+        """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559033845652_webTransaction_1_2_0_5_0","metrics":{"AvgRespTime_AVG":"100"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
 
       event = JSON.parseObject(aiRawEvent)
 
@@ -100,6 +101,34 @@ object KafkaMain {
   }
 
   /**
+    * 测试
+    */
+  def testContinueEvent = {
+    var aiRawEvent =
+      """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559032752333_webTransaction_2_2_111_4_0","metrics":{"AvgRespTime_AVG":"64"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+    var event = JSON.parseObject(aiRawEvent)
+    try {
+      for (i <- 1 to 100) {
+        println(i)
+        aiRawEvent =
+          """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1559032752333_webTransaction_2_2_111_4_0","metrics":{"AvgRespTime_AVG":"32"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+        event = JSON.parseObject(aiRawEvent)
+
+        event.put("timestamp", System.currentTimeMillis)
+
+        producer.send(event.toJSONString, "akka")
+        producer.flush
+
+        Thread.sleep(60000L)
+      }
+    } catch {
+      case e: Exception => e.printStackTrace
+    }
+  }
+
+    /**
     * 测试断流事件
     */
   def testCutoffEvent = {
