@@ -20,33 +20,54 @@ object KafkaMain {
 
   //测试频次
   def testFrequencyEvent: Unit = {
-    try {
-      for (i <- 1 to 10) {
-        var aiRawEvent =
-          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
-        var event = JSON.parseObject(aiRawEvent)
-        event.put("timestamp", System.currentTimeMillis - 20 * 60 * 1000)
+    var aiRawEvent =
+      """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+    var event = JSON.parseObject(aiRawEvent)
+    event.put("timestamp", System.currentTimeMillis - 20 * 60 * 1000)
 
-        producer.send(event.toJSONString, "akka")
-        producer.flush
+    producer.send(event.toJSONString, "akka")
+    producer.flush
 
-        aiRawEvent =
-          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
-        event = JSON.parseObject(aiRawEvent)
-        event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
-        producer.send(event.toJSONString, "akka")
-        producer.flush
+    aiRawEvent =
+      """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+    event = JSON.parseObject(aiRawEvent)
+    event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
+    producer.send(event.toJSONString, "akka")
+    producer.flush
 
+    aiRawEvent =
+      """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+    event = JSON.parseObject(aiRawEvent)
+    event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
+    producer.send(event.toJSONString, "akka")
+    producer.flush
+//    try {
+//      for (i <- 1 to 10) {
+//        var aiRawEvent =
+//          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+//        var event = JSON.parseObject(aiRawEvent)
+//        event.put("timestamp", System.currentTimeMillis - 20 * 60 * 1000)
+//
+//        producer.send(event.toJSONString, "akka")
+//        producer.flush
+//
 //        aiRawEvent =
 //          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
 //        event = JSON.parseObject(aiRawEvent)
 //        event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
 //        producer.send(event.toJSONString, "akka")
 //        producer.flush
-      }
-    } catch {
-      case e: Exception => e.printStackTrace
-    }
+//
+////        aiRawEvent =
+////          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+////        event = JSON.parseObject(aiRawEvent)
+////        event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
+////        producer.send(event.toJSONString, "akka")
+////        producer.flush
+//      }
+//    } catch {
+//      case e: Exception => e.printStackTrace
+//    }
   }
 
   def testContinueEvent2: Unit = {
