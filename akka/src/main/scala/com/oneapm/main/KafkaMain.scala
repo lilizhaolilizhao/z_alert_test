@@ -7,12 +7,83 @@ import com.oneapm.kafka.KafkaPacketProducer
   * 测试断流事件
   */
 object KafkaMain {
-  private val producer =  new KafkaPacketProducer("as_jl_ai_event", "kafka.oneapm.me:9092", synchronously = true, requestRequiredAcks = 1)
+  private val producer = new KafkaPacketProducer("as_jl_mi_event", "10.128.106.94:9092", synchronously = true, requestRequiredAcks = 1)
 
   def main(args: Array[String]): Unit = {
-//    testContinueEvent
-//    testCutoffEvent
-    testFrequencyEvents
+    //    testContinueEvent
+    //    testCutoffEvent
+    //    testFrequencyEvents
+//    testCommonEvent
+//    testContinueEvent2
+    testFrequencyEvent
+  }
+
+  //测试频次
+  def testFrequencyEvent: Unit = {
+    try {
+      for (i <- 1 to 10) {
+        var aiRawEvent =
+          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+        var event = JSON.parseObject(aiRawEvent)
+        event.put("timestamp", System.currentTimeMillis - 20 * 60 * 1000)
+
+        producer.send(event.toJSONString, "akka")
+        producer.flush
+
+        aiRawEvent =
+          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+        event = JSON.parseObject(aiRawEvent)
+        event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
+        producer.send(event.toJSONString, "akka")
+        producer.flush
+
+//        aiRawEvent =
+//          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+//        event = JSON.parseObject(aiRawEvent)
+//        event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
+//        producer.send(event.toJSONString, "akka")
+//        producer.flush
+      }
+    } catch {
+      case e: Exception => e.printStackTrace
+    }
+  }
+
+  def testContinueEvent2: Unit = {
+    try {
+      var aiRawEvent =
+        """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+      var event = JSON.parseObject(aiRawEvent)
+      event.put("timestamp", System.currentTimeMillis - 20 * 60 * 1000)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+
+
+      event = JSON.parseObject(aiRawEvent)
+      event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+    } catch {
+      case e: Exception => e.printStackTrace
+    }
+  }
+
+  def testCommonEvent: Unit = {
+    try {
+      var aiRawEvent =
+        """{"eventCategory":"RawMetricEvent","key":"989b1a66-44a6-41b8-9148-3b41b5bf2a6e","metrics":{"avgRespTime_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+      var event = JSON.parseObject(aiRawEvent)
+//      event.put("timestamp", System.currentTimeMillis - 2 * 60 * 1000)
+      event.put("timestamp", System.currentTimeMillis)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+    } catch {
+      case e: Exception => e.printStackTrace
+    }
   }
 
   /**
@@ -128,7 +199,7 @@ object KafkaMain {
     }
   }
 
-    /**
+  /**
     * 测试断流事件
     */
   def testCutoffEvent = {

@@ -7,7 +7,6 @@
     <modules>
         <module>asm</module>
         <module>akka</module>
-        <module>javaagent</module>
         <module>clickhouse</module>
         <module>kafka</module>
         <module>guice</module>
