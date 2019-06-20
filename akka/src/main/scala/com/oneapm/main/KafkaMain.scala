@@ -13,61 +13,41 @@ object KafkaMain {
     //    testContinueEvent
     //    testCutoffEvent
     //    testFrequencyEvents
-//    testCommonEvent
-//    testContinueEvent2
+    //    testCommonEvent
+    //    testContinueEvent2
     testFrequencyEvent
   }
 
-  //测试频次
+  //测试频次 测试数据乱序
   def testFrequencyEvent: Unit = {
-    var aiRawEvent =
-      """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
-    var event = JSON.parseObject(aiRawEvent)
-    event.put("timestamp", System.currentTimeMillis - 20 * 60 * 1000)
+    try {
+      for (i <- 1 to 200) {
+        if (i % 2 == 0) {
+          var aiRawEvent =
+            """{"eventCategory":"RawMetricEvent","key":"cabd0c80-e15e-4490-9d6e-76b594a2dbaa","metrics":{"errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+          var event = JSON.parseObject(aiRawEvent)
+          event.put("timestamp", System.currentTimeMillis - (19 - i) * 1000)
 
-    producer.send(event.toJSONString, "akka")
-    producer.flush
+          producer.send(event.toJSONString, "akka")
+          producer.flush
 
-    aiRawEvent =
-      """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
-    event = JSON.parseObject(aiRawEvent)
-    event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
-    producer.send(event.toJSONString, "akka")
-    producer.flush
-
-    aiRawEvent =
-      """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
-    event = JSON.parseObject(aiRawEvent)
-    event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
-    producer.send(event.toJSONString, "akka")
-    producer.flush
-//    try {
-//      for (i <- 1 to 10) {
-//        var aiRawEvent =
-//          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
-//        var event = JSON.parseObject(aiRawEvent)
-//        event.put("timestamp", System.currentTimeMillis - 20 * 60 * 1000)
-//
-//        producer.send(event.toJSONString, "akka")
-//        producer.flush
-//
-//        aiRawEvent =
-//          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
-//        event = JSON.parseObject(aiRawEvent)
-//        event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
-//        producer.send(event.toJSONString, "akka")
-//        producer.flush
-//
-////        aiRawEvent =
-////          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
-////        event = JSON.parseObject(aiRawEvent)
-////        event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
-////        producer.send(event.toJSONString, "akka")
-////        producer.flush
-//      }
-//    } catch {
-//      case e: Exception => e.printStackTrace
-//    }
+          aiRawEvent =
+            """{"eventCategory":"RawMetricEvent","key":"cabd0c80-e15e-4490-9d6e-76b594a2dbaa","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+          event = JSON.parseObject(aiRawEvent)
+          event.put("timestamp", System.currentTimeMillis - (20 - i) * 1000)
+          producer.send(event.toJSONString, "akka")
+          producer.flush
+        }
+        //        aiRawEvent =
+        //          """{"eventCategory":"RawMetricEvent","key":"46c29046-517b-453b-a6e6-4c16fb12ad81","metrics":{"avgRespTime_AVG":"10000","errorRate_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+        //        event = JSON.parseObject(aiRawEvent)
+        //        event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
+        //        producer.send(event.toJSONString, "akka")
+        //        producer.flush
+      }
+    } catch {
+      case e: Exception => e.printStackTrace
+    }
   }
 
   def testContinueEvent2: Unit = {
@@ -97,7 +77,7 @@ object KafkaMain {
         """{"eventCategory":"RawMetricEvent","key":"989b1a66-44a6-41b8-9148-3b41b5bf2a6e","metrics":{"avgRespTime_AVG":"10000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
 
       var event = JSON.parseObject(aiRawEvent)
-//      event.put("timestamp", System.currentTimeMillis - 2 * 60 * 1000)
+      //      event.put("timestamp", System.currentTimeMillis - 2 * 60 * 1000)
       event.put("timestamp", System.currentTimeMillis)
 
       producer.send(event.toJSONString, "akka")
