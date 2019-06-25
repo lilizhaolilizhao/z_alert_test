@@ -7,7 +7,7 @@ import com.oneapm.kafka.KafkaPacketProducer
   * 测试断流事件
   */
 object KafkaMain {
-  private val producer = new KafkaPacketProducer("as_jl_mi_event", "10.128.106.94:9092", synchronously = true, requestRequiredAcks = 1)
+  private val producer = new KafkaPacketProducer("as_jl_ai_event", "10.128.106.37:9092", synchronously = true, requestRequiredAcks = 1)
 
   def main(args: Array[String]): Unit = {
     //    testContinueEvent
@@ -15,7 +15,25 @@ object KafkaMain {
     //    testFrequencyEvents
     //    testCommonEvent
     //    testContinueEvent2
-    testFrequencyEvent
+//    testFrequencyEvent
+    testFrequencyEvent22
+  }
+
+  //测试频次 测试数据乱序
+  def testFrequencyEvent22: Unit = {
+    try {
+      for (i <- 1 to 5) {
+          var aiRawEvent =
+            """{"eventCategory":"RawMetricEvent","key":"ONEAPM_ALERT_AI_9_1561370032989_webTransaction_2_2_111_4_0","metrics":{"Apdex":"0.00000000","AvgRespTime_AVG":"1.01555717","CallCount":"12.00000000"},"tags":{"tierId":"6","agentOrMetricId":"0","applicationId":"4"},"timestamp":1561365840000,"ttl":1800}""";
+          var event = JSON.parseObject(aiRawEvent)
+          event.put("timestamp", System.currentTimeMillis)
+
+          producer.send(event.toJSONString, "akka")
+          producer.flush
+      }
+    } catch {
+      case e: Exception => e.printStackTrace
+    }
   }
 
   //测试频次 测试数据乱序
