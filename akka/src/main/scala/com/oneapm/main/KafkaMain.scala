@@ -1,5 +1,7 @@
 package com.oneapm.main
 
+import java.util.Date
+
 import com.alibaba.fastjson.JSON
 import com.oneapm.kafka.KafkaPacketProducer
 
@@ -7,16 +9,208 @@ import com.oneapm.kafka.KafkaPacketProducer
   * 测试断流事件
   */
 object KafkaMain {
-  private val producer = new KafkaPacketProducer("as_jl_ai_event", "10.128.106.37:9092", synchronously = true, requestRequiredAcks = 1)
+  private val producer = new KafkaPacketProducer("as_jl_bi_event", "10.128.106.94:9092", synchronously = true, requestRequiredAcks = 1)
 
   def main(args: Array[String]): Unit = {
+    testContinueEventSong
     //    testContinueEvent
     //    testCutoffEvent
     //    testFrequencyEvents
     //    testCommonEvent
     //    testContinueEvent2
 //    testFrequencyEvent
-    testFrequencyEvent22
+//    testFrequencyEvent22
+//    testContinueEvent23
+//    testContinueEventLlz
+  }
+
+  def testContinueEventSong = {
+    var aiRawEvent =
+      """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"-2600000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+    var event = JSON.parseObject(aiRawEvent)
+    try {
+      event.put("timestamp", System.currentTimeMillis)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+
+      println("发送数据: ")
+    } catch {
+      case e: Exception => e.printStackTrace
+    }
+
+//    for (i <- 1 to 22) {
+//      if (i % 2 == 1) {
+//        var aiRawEvent =
+//          """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"-2600000"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+//
+//        var event = JSON.parseObject(aiRawEvent)
+//        try {
+//          event.put("timestamp", System.currentTimeMillis)
+//
+//          producer.send(event.toJSONString, "akka")
+//          producer.flush
+//
+//          println("发送数据: " + i)
+//        } catch {
+//          case e: Exception => e.printStackTrace
+//        }
+//      }
+//
+//      Thread.sleep(60 * 1000L)
+//    }
+
+//    var aiRawEvent =
+//      """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"2600"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+//
+//    var event = JSON.parseObject(aiRawEvent)
+//    try {
+//      event.put("timestamp", System.currentTimeMillis)
+//
+//      producer.send(event.toJSONString, "akka")
+//      producer.flush
+//    } catch {
+//      case e: Exception => e.printStackTrace
+//    }
+  }
+
+  def testContinueEventLlz = {
+    while (true) {
+      var aiRawEvent =
+        """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"2600"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+      var event = JSON.parseObject(aiRawEvent)
+      try {
+        event.put("timestamp", System.currentTimeMillis)
+
+        producer.send(event.toJSONString, "akka")
+        producer.flush
+
+        println("发送数据: " + new Date())
+      } catch {
+        case e: Exception => e.printStackTrace
+      }
+
+      Thread.sleep(6 * 60 * 1000)
+    }
+  }
+
+    //  def testContinueEvent234 = {
+//    var aiRawEvent =
+//      """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"2600"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+//
+//    var event = JSON.parseObject(aiRawEvent)
+//    try {
+//      event.put("timestamp", System.currentTimeMillis - 2 * 60 * 1000)
+//
+//      producer.send(event.toJSONString, "akka")
+//      producer.flush
+//
+//      aiRawEvent =
+//        """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"2500"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+//
+//      event = JSON.parseObject(aiRawEvent)
+//
+//      event.put("timestamp", System.currentTimeMillis - 1 * 60 * 1000)
+//
+//      producer.send(event.toJSONString, "akka")
+//      producer.flush
+//
+//      aiRawEvent =
+//        """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"2400"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+//
+//      event = JSON.parseObject(aiRawEvent)
+//
+//      event.put("timestamp", System.currentTimeMillis)
+//
+//      producer.send(event.toJSONString, "akka")
+//      producer.flush
+//    } catch {
+//      case e: Exception => e.printStackTrace
+//    }
+//  }
+
+  def testContinueEvent23 = {
+    for (i <- 1 to 22) {
+      if (i % 2 == 0) {
+        var aiRawEvent =
+          """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"2600"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+        if (i == 22) {
+          println("================")
+        }
+
+        var event = JSON.parseObject(aiRawEvent)
+        try {
+          event.put("timestamp", System.currentTimeMillis - (i - i) * 60 * 1000)
+
+          producer.send(event.toJSONString, "akka")
+          producer.flush
+        } catch {
+          case e: Exception => e.printStackTrace
+        }
+      }
+    }
+
+    var aiRawEvent =
+      """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"2600"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+    var event = JSON.parseObject(aiRawEvent)
+    try {
+      event.put("timestamp", System.currentTimeMillis - (22 - 13) * 60 * 1000)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+    } catch {
+      case e: Exception => e.printStackTrace
+    }
+
+    aiRawEvent =
+      """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"2600"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+
+    event = JSON.parseObject(aiRawEvent)
+    try {
+      event.put("timestamp", System.currentTimeMillis - (22 - 22) * 60 * 1000)
+
+      producer.send(event.toJSONString, "akka")
+      producer.flush
+    } catch {
+      case e: Exception => e.printStackTrace
+    }
+
+//    var aiRawEvent =
+//      """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"2600"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+//
+//    var event = JSON.parseObject(aiRawEvent)
+//    try {
+//      event.put("timestamp", System.currentTimeMillis - 25 * 60 * 1000)
+//
+//      producer.send(event.toJSONString, "akka")
+//      producer.flush
+//
+//      aiRawEvent =
+//        """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"2500"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+//
+//      event = JSON.parseObject(aiRawEvent)
+//
+//      event.put("timestamp", System.currentTimeMillis - 18 * 60 * 1000)
+//
+//      producer.send(event.toJSONString, "akka")
+//      producer.flush
+//
+//      aiRawEvent =
+//        """{"eventCategory":"RawMetricEvent","key":"61c254c1-73f0-4cff-bc73-f0c05756600b_-1_-1_-1_-1_-1","metrics":{"pageLoadTime_AVG":"2400"},"tags":{"tierId":"1","agentOrMetricId":"0","applicationId":"1"},"timestamp":1535620539000,"ttl":1800}""";
+//
+//      event = JSON.parseObject(aiRawEvent)
+//
+//      event.put("timestamp", System.currentTimeMillis)
+//
+//      producer.send(event.toJSONString, "akka")
+//      producer.flush
+//    } catch {
+//      case e: Exception => e.printStackTrace
+//    }
   }
 
   //测试频次 测试数据乱序
